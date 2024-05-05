@@ -1,1 +1,4 @@
 Web_Development_with_Node_Express.pdf
+
+# ignore packages installed by npm
+Using-Express/node_modules
