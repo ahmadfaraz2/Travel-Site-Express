@@ -20,9 +20,19 @@ app.get("/", function (req, res) {
 });
 
 
+
+var fortunes = [
+    "Conquer your fears or they will conquer you.",
+    "River needs springs.",
+    "Do not fear what you don't know.",
+    "You will have pleasent surprise.",
+    "Whenever possible, keep it simple",
+]
+
 app.get("/about", function (req, res) {
     // res.type("text/plain");
-    res.render("about");
+    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)]
+    res.render("about", { fortune: randomFortune });
 });
 
 
