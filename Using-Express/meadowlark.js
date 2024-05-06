@@ -10,6 +10,9 @@ app.set("view engine", "handlebars");
 
 app.set("port", process.env.PORT || 3000);
 
+// middleware to server Static Files
+app.use(express.static(__dirname + '/public'));
+
 
 app.get("/", function (req, res) {
     // res.type("text/plain");
