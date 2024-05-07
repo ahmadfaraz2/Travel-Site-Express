@@ -30,7 +30,11 @@ app.get("/", function (req, res) {
 
 app.get("/about", function (req, res) {
     // res.type("text/plain");
-    res.render("about", { fortune: fortune.getFortune() });
+    res.render("about", 
+    {
+        fortune: fortune.getFortune(),
+        pageTestScript: '/qa/tests-about.js'
+    });
 });
 
 
