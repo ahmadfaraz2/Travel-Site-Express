@@ -1,0 +1,46 @@
+<h1 style="text-align: center;">This is page dedicated to check what inside "Request Object"</h1>
+
+<h1>Params</h1>
+<ul>
+    {{#each params}}
+        <li>{{this.key}}: {{this.value}}</li>
+    {{/each}}
+</ul>
+
+<h1>Query</h1>
+<ul>
+    {{#each query}}
+        <li>{{this.key}}: {{this.value}}</li>
+    {{/each}}
+</ul>
+
+
+<h1>Body</h1>
+<ul>
+    {{#each body}}
+        <li>{{this.key}}: {{this.value}}</li>
+    {{/each}}
+</ul>
+
+
+<h1>Route</h1>
+<ul>
+    {{#each route}}
+        <li>{{@key}}: {{this}}</li>
+    {{/each}}
+</ul>
+
+
+<h1>Headers</h1>
+<ul>
+    {{#each headers}}
+        <li>{{@key}}: {{this}}</li>
+    {{/each}}
+</ul>
+
+<h1>{{ip}}</h1>
+<h1>{{path}}</h1>
+<h1>{{host}}</h1>
+<h1>{{xhr}}</h1>
+<h1>{{protocol}}</h1>
+<h1>{{acceptedLanguages}}</h1>

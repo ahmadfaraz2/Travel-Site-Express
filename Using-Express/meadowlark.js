@@ -38,6 +38,41 @@ app.get("/about", function (req, res) {
 });
 
 
+app.get('/headers', function(req, res){
+    res.set('Content-Type', 'text/plain');
+    var s = '';
+    for (var name in req.headers) s += name + ':' + req.headers[name] + '\n';
+    res.send(s);
+});
+
+
+app.disable('X-Powered-By');
+
+
+app.get('/request-object', function(req, res){
+    console.log("Route Accessed");
+    const paramsData = Object.entries(req.params).map(([key, value]) => ({ key, value }));
+    console.log(paramsData);
+    const queryData = Object.entries(req.query).map(([key, value]) => ({ key, value }));
+    console.log(queryData);
+    const routeData = Object.entries(req.route).map(([key, value]) => ({ key, value }));
+    console.log(routeData);
+    res.render("request-object", {
+        params: req.params,
+        query: req.query,
+        body: req.body,
+        route: req.route,
+        headers: req.headers,
+        ip: req.ip,
+        path: req.path,
+        host: req.hostname,
+        xhr: req.xhr,
+        protocol: req.protocol,
+        acceptedLanguages: req.acceptedLanguages,
+    });
+});
+
+
 app.get('tours/hood-river', function(req, res){
     res.render('tours/hood-river');
 });
@@ -65,5 +100,5 @@ app.use(function (err, req, res, next) {
 
 
 app.listen(app.get('port'), function () {
-    console.log("Express started on http://localhost: " + app.get("port") + "; press Ctrl-C to terminate.");
+    console.log("Express started on http://localhost:" + app.get("port") + "; press Ctrl-C to terminate.");
 });
