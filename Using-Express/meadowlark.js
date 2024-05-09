@@ -135,6 +135,35 @@ app.use(function(err, req, res, next){
     res.status(500).render('error')
 });
 
+// Example 6.9 Basic Form Processing
+
+// body-parser middleware must be linked in
+app.post('/process-contact', function(req, res){
+    console.log('Received contact from ' + req.body.name +
+    ' <'+ req.body.email + ' >');
+        // save to the database
+        return redirect(303, '/thank-you');
+});
+
+// Example 6.10
+
+// body-parser middleware must be linked in
+app.post('/process-contact', function(req, res){
+    console.log('Received contact from ' + req.body.name + 
+    ' <' + req.body.email + ' >');
+    try {
+        // save to database
+        return res.xhr ?
+            res.render({success : true}):
+            res.redirect(303, 'thank-you');
+    }
+    catch(ex) {
+        return res.xhr ?
+            res.json({error: 'Database Error'}):
+            res.redirect(303, '/database-error');
+    }
+});
+
 
 // Example 6.8 Adding a 404 handler
 
