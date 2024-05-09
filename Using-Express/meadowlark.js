@@ -82,6 +82,70 @@ app.get('tours/request-group-rate', function(req, res){
     res.render('tours/request-group-rate');
 });
 
+
+
+// Chapter 6 Example codes
+
+// Example 6.2 response code other than 200
+app.get('/error', function(req, res){
+    res.status(500);
+    res.render('error');
+    // res.status(500).render('error');
+});
+
+// Example 6.3 Passing a context to view, including querystring, cookie and session values
+app.get('/greeting', function(req, res){
+    res.render('about', {
+        message : 'Welcome',
+        style : req.query.style,
+        userid : req.cookies.userid,
+        username: req.session.username,
+    });
+});
+
+
+// Example 6.4 Rendering a view without a layout
+
+// the following layout does not have layout file, so views/no-layout.handlebars
+// must include all necessary HTML
+app.get('/no-layout', function(req, res){
+    res.render('no-layout', {layout: null});
+});
+
+// Example 6.5 Rendering a view with custom layout
+
+// the layout file view/layouts/custom.handlebars will be used
+app.get('/custom-layout', function(req, res){
+    res.render('custom-layout', {layout: 'custom'});
+});
+
+// Example 6.6 Rendering plain text output
+app.get('/test', function(req, res){
+    res.type('plain/text');
+    res.send('This is a test');
+});
+
+// Example 6.7 adding a Error handler
+
+// this should apear AFTER all of your routes
+// note that even if you don't need the "next" function, it must be included for Express
+// to recognize this as an error handler
+app.use(function(err, req, res, next){
+    consolo.error(err.stack);
+    res.status(500).render('error')
+});
+
+
+// Example 6.8 Adding a 404 handler
+
+// this should appear after all of your routes
+app.use(function(req, res){
+    res.status(404).render('not-found');
+})
+
+
+
+
 // custom 404 page
 app.use(function (req, res, next) {
     // res.type("text/plain");
