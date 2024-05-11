@@ -125,15 +125,6 @@ app.get('/test', function(req, res){
     res.send('This is a test');
 });
 
-// Example 6.7 adding a Error handler
-
-// this should apear AFTER all of your routes
-// note that even if you don't need the "next" function, it must be included for Express
-// to recognize this as an error handler
-app.use(function(err, req, res, next){
-    consolo.error(err.stack);
-    res.status(500).render('error')
-});
 
 // Example 6.9 Basic Form Processing
 
@@ -154,8 +145,8 @@ app.post('/process-contact', function(req, res){
     try {
         // save to database
         return res.xhr ?
-            res.render({success : true}):
-            res.redirect(303, 'thank-you');
+        res.render({success : true}):
+        res.redirect(303, 'thank-you');
     }
     catch(ex) {
         return res.xhr ?
@@ -163,6 +154,18 @@ app.post('/process-contact', function(req, res){
             res.redirect(303, '/database-error');
     }
 });
+
+
+// Example 6.7 adding a Error handler
+
+// this should apear AFTER all of your routes
+// note that even if you don't need the "next" function, it must be included for Express
+// to recognize this as an error handler
+app.use(function(err, req, res, next){
+    consolo.error(err.stack);
+    res.status(500).render('error')
+});
+
 
 
 // Example 6.8 Adding a 404 handler
