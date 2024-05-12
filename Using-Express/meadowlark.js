@@ -156,6 +156,17 @@ app.post('/process-contact', function(req, res){
 });
 
 
+var tours = [
+    {id: 0, name: 'Hood River', price: 99.99},
+    {id: 1, name: 'Oregon Coast', price: 149.95 },
+];
+
+// Example 6.11 Simple GET endpoint returning only JSON
+app.get('/api/tours', function(req, res){
+    res.json(tours);
+});
+
+
 // Example 6.7 adding a Error handler
 
 // this should apear AFTER all of your routes
@@ -163,7 +174,7 @@ app.post('/process-contact', function(req, res){
 // to recognize this as an error handler
 app.use(function(err, req, res, next){
     consolo.error(err.stack);
-    res.status(500).render('error')
+    res.status(500).render('error');
 });
 
 
@@ -173,8 +184,7 @@ app.use(function(err, req, res, next){
 // this should appear after all of your routes
 app.use(function(req, res){
     res.status(404).render('not-found');
-})
-
+});
 
 
 
