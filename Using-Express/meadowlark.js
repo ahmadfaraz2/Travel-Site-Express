@@ -175,15 +175,15 @@ app.put('/api/tour/:id', function(req, res){
     if (p) {
         if (req.query.name){
             p.name = req.query.name;
-        };
+        }
         if (req.query.price){
             p.price = req.query.price;
-        };
+        }
         res.json({success: true});
     }
     else {
         res.json({error: 'No such tour exists.'});
-    };
+    }
 });
 
 // Example 6.14 shows a DEL endpoint for deleting
@@ -191,7 +191,7 @@ app.put('/api/tour/:id', function(req, res){
 // API that deletes a product
 app.del('/api/tour/:id', function(req, res){
     var i;
-    for( var i=tours.length-1; i>=0; i--){
+    for( i=tours.length-1; i>=0; i--){
         if (tours[i].id == req.params.id) break;
         if ( i>=0 ){
             tours.splice(i, 1);
@@ -228,7 +228,7 @@ function getWeatherData(){
                 temp: '55.0 F (12.8 C)',
             },
         ]
-    }
+    };
 }
 
 
@@ -236,7 +236,7 @@ app.use(function(req, res, next){
     if (!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weather = getWeatherData();
     next();
-})
+});
 
 
 // Example 6.7 adding a Error handler
