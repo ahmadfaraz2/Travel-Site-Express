@@ -167,6 +167,42 @@ app.get('/api/tours', function(req, res){
 });
 
 
+// Example 6.13 PUT endpoint for updating
+
+// API that updates a tour and returns JSON; params are passed using querystring
+app.put('/api/tour/:id', function(req, res){
+    var p = tours.some(function(p){return p.id == req.params.id});
+    if (p) {
+        if (req.query.name){
+            p.name = req.query.name;
+        };
+        if (req.query.price){
+            p.price = req.query.price;
+        };
+        res.json({success: true});
+    }
+    else {
+        res.json({error: 'No such tour exists.'});
+    };
+});
+
+// Example 6.14 shows a DEL endpoint for deleting
+
+// API that deletes a product
+app.del('/api/tour/:id', function(req, res){
+    var i;
+    for( var i=tours.length-1; i>=0; i--){
+        if (tours[i].id == req.params.id) break;
+        if ( i>=0 ){
+            tours.splice(i, 1);
+            res.json({success: true});
+        }
+        else {
+            res.json({error: 'No such tour exists.'});
+        }
+    }
+});
+
 // Example 6.7 adding a Error handler
 
 // this should apear AFTER all of your routes
