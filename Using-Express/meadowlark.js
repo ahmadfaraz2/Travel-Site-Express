@@ -29,6 +29,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.user(require('body-parser')());
+
 
 // routes go here
 app.get("/", function (req, res) {
