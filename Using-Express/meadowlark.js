@@ -4,7 +4,16 @@ var fortune = require("./lib/fortune.js");
 var app = express();
 
 // Setup handlebars view engine
-var handlebars = require("express3-handlebars").create({ defaultLayout: "main" });
+var handlebars = require("express3-handlebars").create({ 
+    defaultLayout: "main", 
+    helpers : {
+        section : function(name, options){
+            if (!this._section) this._section = {};
+            this._section[name] = options.fn(this);
+            return null;
+        }
+    }
+    });
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 
@@ -189,7 +198,7 @@ app.put('/api/tour/:id', function(req, res){
 // Example 6.14 shows a DEL endpoint for deleting
 
 // API that deletes a product
-app.del('/api/tour/:id', function(req, res){
+app.delete('/api/tour/:id', function(req, res){
     var i;
     for( i=tours.length-1; i>=0; i--){
         if (tours[i].id == req.params.id) break;
