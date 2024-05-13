@@ -29,7 +29,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.user(require('body-parser')());
+app.use(require('body-parser')());
+
+// Chapter 8 Form Processing
+app.get('/newsletter', function(req, res){
+    // we will learn about CSRF later... for now, we just 
+    // provide a dummy value
+    res.render('newsletter', {csrf: 'CSRF token goes here'});
+});
 
 
 // routes go here
