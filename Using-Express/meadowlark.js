@@ -46,6 +46,10 @@ app.post('/process', function(req, res){
     res.redirect(303, '/thank-you');
 });
 
+app.get('/thank-you', function(req, res){
+    res.render('thank-you');
+});
+
 // routes go here
 app.get("/", function (req, res) {
     // res.type("text/plain");
@@ -279,9 +283,9 @@ app.use(function(err, req, res, next){
 // Example 6.8 Adding a 404 handler
 
 // this should appear after all of your routes
-app.use(function(req, res){
-    res.status(404).render('not-found');
-});
+// app.use(function(req, res){
+//     res.status(404).render('not-found');
+// });
 
 
 
