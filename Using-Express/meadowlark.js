@@ -50,6 +50,16 @@ app.get('/thank-you', function(req, res){
     res.render('thank-you');
 });
 
+app.post('/process', function(req, res){
+    if (req.xhr || req.accepts('json, html') === 'json'){
+        res.send({success : true});
+    }
+    else 
+    {
+        res.redirect(303, '/thank-you');
+    }
+});
+
 // routes go here
 app.get("/", function (req, res) {
     // res.type("text/plain");
