@@ -338,11 +338,12 @@ app.use(function (err, req, res, next) {
     res.render("500");
 });
 
+// JQuery File Upload endpoint middleware
 app.use('/upload', function(req, res, next){
     var now = Date.now();
     jqupload.fileHandler({
         uploadDir : function(){
-            return __dirname + '/public/uploads' + now;
+            return __dirname + '/public/uploads/' + now;
         }, 
     uploadDir: function(){
         return '/uploads/' + now;
