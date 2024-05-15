@@ -1,6 +1,6 @@
 var express = require("express");
 var fortune = require("./lib/fortune.js");
-var formidable = require("formidable")
+var formidable = require("formidable");
 var jqupload = require("jquery-file-upload-middleware");
 var credentials = require('./credentials.js');
 
@@ -23,8 +23,27 @@ app.set("view engine", "handlebars");
 
 app.set("port", process.env.PORT || 3000);
 
+// Cookies and Sessions in Express
+app.use(require('cookie-parser')(credentials.cookieSecret));
+app.use(require('express-session')({
+    resave: false,
+    saveUninitialized: false,
+    secret: credentials.cookieSecret
+}));
+
 // middleware to server Static Files
 app.use(express.static(__dirname + '/public'));
+app.use(require('body-parser')());
+
+// middleware to add "flash" object to the context it there's one in session
+app.use(function(req, res, next){
+    // if there's a flash message, transfer
+    // it to context, then clear it.
+    res.locals.flash = req.session.flash;
+    delete req.session.flash;
+    next();
+});
+
 
 // middleware to detect test=1 in the querystring.
 app.use(function (req, res, next) {
@@ -32,15 +51,12 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(require('body-parser')());
 
-// Cookies in Express
-app.use(require('cookie-parser')(credentials.cookieSecret));
+
 
 // Chapter 8 Form Processing
 app.get('/newsletter', function(req, res){
-    // we will learn about CSRF later... for now, we just 
-    // provide a dummy value
+    // we will learn about CSRF later... for now, we just provide a dummy value
     res.render('newsletter', {csrf: 'CSRF token goes here'});
 });
 
@@ -99,7 +115,6 @@ app.get("/", function (req, res) {
     // var signedMonster = req.signedCookies['monster'];
     console.log(monster);
     console.log(signedMonster);
-
     res.clearCookie('monster');
     res.render("home");
 });
@@ -322,7 +337,7 @@ app.use(function(req, res, next){
 // note that even if you don't need the "next" function, it must be included for Express
 // to recognize this as an error handler
 app.use(function(err, req, res, next){
-    consolo.error(err.stack);
+    console.error(err.stack);
     res.status(500).render('error');
 });
 
