@@ -2,6 +2,7 @@ var express = require("express");
 var fortune = require("./lib/fortune.js");
 var formidable = require("formidable")
 var jqupload = require("jquery-file-upload-middleware");
+var credentials = require('./credentials.js');
 
 var app = express();
 
@@ -32,6 +33,9 @@ app.use(function (req, res, next) {
 });
 
 app.use(require('body-parser')());
+
+// Cookies in Express
+app.use(require('cookie-parser')(credentials.cookieSecret));
 
 // Chapter 8 Form Processing
 app.get('/newsletter', function(req, res){
@@ -84,8 +88,19 @@ app.post('/contest/vacation-photo/:year/:month', function(req, res){
 });
 
 // routes go here
+// add a cookie to test some cookies practice
 app.get("/", function (req, res) {
     // res.type("text/plain");
+    res.cookie('monstor', 'nom nom');
+    res.cookie('signed_monster', 'nom nom', {signed : true});
+
+    var monster = req.cookies.monster;
+    var signedMonster = req.signedCookies.monster;
+    // var signedMonster = req.signedCookies['monster'];
+    console.log(monster);
+    console.log(signedMonster);
+
+    res.clearCookie('monster');
     res.render("home");
 });
 
@@ -345,7 +360,7 @@ app.use('/upload', function(req, res, next){
         uploadDir : function(){
             return __dirname + '/public/uploads/' + now;
         }, 
-    uploadDir: function(){
+    uploadUrl: function(){
         return '/uploads/' + now;
     },
     })(req, res, next);
