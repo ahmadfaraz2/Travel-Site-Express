@@ -357,6 +357,23 @@ function getWeatherData(){
 }
 
 
+// chapter 10 Middlewars
+app.use(function(req, res, next){
+    console.log('Processing request for '+ req.url + ' ....');
+    next();
+});
+
+app.use(function(req, res , next){
+    console.log('Termination request');
+    res.send('thanks for playing!');
+    // note that we do NOT call next() here.... this terminates the reqeust
+});
+
+app.use(function(req, res, next){
+    console.log('whoops, i\'ll never get called');
+});
+
+
 app.use(function(req, res, next){
     if (!res.locals.partials) res.locals.partials = {};
     res.locals.partials.weather = getWeatherData();
