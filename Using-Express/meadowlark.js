@@ -3,6 +3,7 @@ var fortune = require("./lib/fortune.js");
 var formidable = require("formidable");
 var jqupload = require("jquery-file-upload-middleware");
 var credentials = require('./credentials.js');
+var nodemailer = require('nodemailer');
 
 var app = express();
 
@@ -429,6 +430,26 @@ app.use('/upload', function(req, res, next){
         return '/uploads/' + now;
     },
     })(req, res, next);
+});
+
+// Mail Transport
+var mailTransport = nodemailer.createTransport('SMTP', {
+    service : 'Gmail',
+    auth : {
+        user : credentials.gmail.user,
+        password : credentials.gmail.password,
+    }
+});
+
+// Dummy Information
+var mailTransport2 = nodemailer.createTransport('SMTP',{
+    host : 'smtp.gmail.com',
+    secureConnection: true,
+    port : 465,
+    auth: {
+        user: credentials.gmail.user,
+        password: credentials.gmail.password
+    }
 });
 
 
